@@ -4,6 +4,16 @@ from prediction_helper import predict
 # Define the page layout
 st.title('Health Insurance Cost Predictor')
 
+st.markdown(
+    """
+    Estimate health insurance costs using a machine learning model.
+
+    Enter your personal, lifestyle, and medical details below to receive
+    a predicted insurance cost based on the model's learned patterns.
+    """,
+    help="This application is a machine learning project developed for educational purposes."
+)
+
 categorical_options = {
     'Gender': ['Male', 'Female'],
     'Marital Status': ['Unmarried', 'Married'],
@@ -70,10 +80,34 @@ input_dict = {
     'Medical History': medical_history
 }
 
+
+
 # Button to make prediction
 if st.button('Predict'):
     prediction = predict(input_dict)
     st.success(f'Predicted Health Insurance Cost: {prediction}')
 
+
+
+
+
+
+# Footer
+st.divider()
+
+st.markdown(
+    """
+    <div style="text-align: center;">
+        Built by <strong>Ittihadur Rahman</strong>
+        <br>
+        Machine Learning Project
+        <br><br>
+        <a href="https://www.linkedin.com/in/ittihadur-rahman/" target="_blank">
+            Connect with me on LinkedIn
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     
 
