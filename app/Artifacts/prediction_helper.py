@@ -1,11 +1,19 @@
 from joblib import load
 import pandas as pd
+import json
 
 model_young = load('app/Artifacts/model_young.joblib')
 model_rest = load('app/Artifacts/model_rest.joblib')
 
 scaler_young = load('app/Artifacts/scaler_young.joblib')
 scaler_rest = load('app/Artifacts/scaler_rest.joblib')
+
+
+with open('app/Artifacts/model_columns.json', 'r') as file:
+    expected_columns = json.load(file)
+
+with open('app/Artifacts/insurance_plan_encoding.json', 'r') as file:
+    insurance_plan_encoding = json.load(file)
 
 def calculate_normalized_risk(medical_history):
     risk_scores = {
@@ -32,14 +40,6 @@ def calculate_normalized_risk(medical_history):
 
 def preprocess_input(input_dict):
     # Define the expected columns and initialize the DataFrame with zeros
-    expected_columns = [
-        'age', 'number_of_dependants', 'income_lakhs', 'insurance_plan', 'genetical_risk', 'normalized_risk_score',
-        'gender_Male', 'region_Northwest', 'region_Southeast', 'region_Southwest', 'marital_status_Unmarried',
-        'bmi_category_Obesity', 'bmi_category_Overweight', 'bmi_category_Underweight', 'smoking_status_Occasional',
-        'smoking_status_Regular', 'employment_status_Salaried', 'employment_status_Self-Employed'
-    ]
-
-    insurance_plan_encoding = {'Bronze': 1, 'Silver': 2, 'Gold': 3}
 
     df = pd.DataFrame(0, columns=expected_columns, index=[0])
     # df.fillna(0, inplace=True)
